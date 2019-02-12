@@ -1,0 +1,99 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.epam.demo.pact</groupId>
+	<artifactId>pact-demo-client</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<repositories>
+		<repository>
+			<id>bintray</id>
+			<url>http://dl.bintray.com/epam/reportportal</url>
+		</repository>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<slf4jVersion>1.7.25</slf4jVersion>
+		<log4j-core.version>2.10.0</log4j-core.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.github.reportportal</groupId>
+			<artifactId>agent-java-junit5</artifactId>
+			<version>893ce269e6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.epam.reportportal</groupId>
+			<artifactId>logger-java-log4j</artifactId>
+			<version>4.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>${log4j-core.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4jVersion}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/au.com.dius/pact-jvm-consumer-junit5 -->
+		<dependency>
+			<groupId>au.com.dius</groupId>
+			<artifactId>pact-jvm-consumer-junit5_2.12</artifactId>
+			<version>3.6.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>2.21.0</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+			<plugins>
+
+				<plugin>
+					<!-- mvn pact:publish  -->
+					<groupId>au.com.dius</groupId>
+					<artifactId>pact-jvm-provider-maven_2.11</artifactId>
+					<version>3.5.10</version>
+					<configuration>
+						<pactDirectory>../pacts</pactDirectory> <!-- Defaults to ${project.build.directory}/pacts -->
+						<pactBrokerUrl>http://localhost:8113</pactBrokerUrl>
+						<projectVersion>${project.version}</projectVersion> <!-- Defaults to ${project.version} -->
+						<trimSnapshot>true</trimSnapshot> <!-- Defaults to false -->
+					</configuration>
+				</plugin>
+
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>
